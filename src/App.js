@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import imagen from './img/cryptomonedas.png';
-import './css/app.css';
+import './css/App.css';
 import FormCrypto from './components/FormCrypto';
 
 class App extends Component {
