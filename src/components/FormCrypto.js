@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import Cryptocoin from './Cryptocoin';
 class FormCrypto extends Component {
     constructor(props) {
         super(props);
@@ -16,11 +16,9 @@ class FormCrypto extends Component {
         //para hacer el llamado o peticion
         await axios.get(url)
         .then(response => {
-            //lo pasamos al state
             this.setState({
                 cryptoCoins: response.data.Data
             })
-
             //console.log(response)
         })
     }
@@ -45,6 +43,12 @@ class FormCrypto extends Component {
                         <label>Elige tu Criptomoneda</label>
                         <select className="u-full-width">
                             <option value="">Elige tu criptomoneda</option>
+                            {Object.keys(this.state.cryptoCoins).map(key =>(
+                                <Cryptocoin 
+                                    key={key}
+                                    crypto={this.state.cryptoCoins[key]}
+                                />
+                            ))}
                         </select>
                     </div>
                 </div>
