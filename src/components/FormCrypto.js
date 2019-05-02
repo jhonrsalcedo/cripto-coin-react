@@ -16,7 +16,12 @@ class FormCrypto extends Component {
         //para hacer el llamado o peticion
         await axios.get(url)
         .then(response => {
-            console.log(response)
+            //lo pasamos al state
+            this.setState({
+                cryptoCoins: response.data.Data
+            })
+
+            //console.log(response)
         })
     }
     render() {
