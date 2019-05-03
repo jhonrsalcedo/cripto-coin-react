@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Cryptocoin from './Cryptocoin';
+import Error from './Error';
 class FormCrypto extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cryptoCoins:[]
+            cryptoCoins:[],
+            coin:'',
+            cryptocoin:'',
+            error: false
         }
     }
-//para mejorar el perform de la app utilizamos el componentWilMount, este estaria llamando la api antes de que cargue el componente
+//para mejorar el performance de la app utilizamos el componentWilMount, este estaria llamando la api antes de que cargue el componente
 // este llamado sera asincrono async
        async componentWillMount(){
         const url='https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD';
@@ -22,12 +26,51 @@ class FormCrypto extends Component {
             //console.log(response)
         })
     }
+
+    //este metodo se ejecuta cada vez que el usuario elige una opcion del select
+    handleSelectValue = (e) =>{
+        //console.log(e.target.name)
+       this.setState({
+        [e.target.name]:e.target.value
+       })
+       // o utilizar esta forma
+      /*  const {name, value} = e.target;
+       this.setState({
+           [name]:value
+       }) */
+    }
+
+    quoteCoins = (e) =>{
+        e.preventDefault();
+        //validar que el usuario haya elegido
+        //aplicamos destructuring para acceder a los datos
+        const {coin, cryptocoin} = this.state;
+        if (coin === '' || cryptocoin === '') {
+            this.setState({
+                error: true
+            }, 
+            //callback para eliminar el mensaje temporal de error
+            () => {
+                setTimeout(() => {
+                    this.setState({
+                        error: false
+                    })
+                }, 3000);
+            })
+        }
+        //crear el objeto
+        
+        //eviar los datos al componente App.js para cotizar
+    }
     render() {
+        const errorMessage= (this.state.error) ? <Error  errorMessage="Ambos campos son Obligatorio"/>
+        : '';
         return (
-            <form>
+            <form onSubmit={this.quoteCoins}>
+            {errorMessage}
                 <div className="row">
                     <label>Elige tu Moneda</label>
-                    <select
+                    <select name="coin" onChange={this.handleSelectValue}
                         className="u-full-width">
                         <option value="">Elige tu moneda</option>
                         <option value="USD">Dolar Estadounidense</option>
@@ -41,12 +84,13 @@ class FormCrypto extends Component {
                 <div className="row">
                     <div>
                         <label>Elige tu Criptomoneda</label>
-                        <select className="u-full-width">
+                        <select name="cryptocoin" onChange={this.handleSelectValue}
+                         className="u-full-width">
                             <option value="">Elige tu criptomoneda</option>
                             {Object.keys(this.state.cryptoCoins).map(key =>(
                                 <Cryptocoin 
                                     key={key}
-                                    crypto={this.state.cryptoCoins[key]}
+                                    cryptoCoins={this.state.cryptoCoins[key]}
                                 />
                             ))}
                         </select>

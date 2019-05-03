@@ -1,9 +1,10 @@
 import React from 'react';
 
-const Cryptocoin = ({crypto}) =>{
-    //console.log(crypto.CoinInfo)
+//Stateless Function Component
+const Cryptocoin = ({cryptoCoins}) =>{
+    //console.log(cryptoCoins.CoinInfo)
 
-    const {FullName, Name} = crypto.CoinInfo;
+    const {FullName, Name} = cryptoCoins.CoinInfo;
     return(
         <option value={Name}>{FullName}</option>
     );
