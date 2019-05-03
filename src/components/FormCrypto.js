@@ -56,11 +56,18 @@ class FormCrypto extends Component {
                         error: false
                     })
                 }, 3000);
-            })
+            });
+            // evitar se ejecute nuevamente
+            return;
         }
         //crear el objeto
-        
+        const quoteForm = {
+            coin,
+            cryptocoin
+        }
+
         //eviar los datos al componente App.js para cotizar
+        this.props.quoteCryptocoin(quoteForm);
     }
     render() {
         const errorMessage= (this.state.error) ? <Error  errorMessage="Ambos campos son Obligatorio"/>
