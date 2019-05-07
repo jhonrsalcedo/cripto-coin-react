@@ -3,6 +3,7 @@ import imagen from './img/cryptomonedas.png';
 import './css/App.css';
 import FormCrypto from './components/FormCrypto';
 import Result from './components/Result';
+import Spinner from './components/Spinner';
 import axios from 'axios';
 
 class App extends Component {
@@ -11,7 +12,8 @@ class App extends Component {
     this.state = {
       result:{},
       coinSelect:'',
-      cryptoSelect:''
+      cryptoSelect:'',
+      loading: false
 
     }
   }
@@ -26,11 +28,21 @@ class App extends Component {
     //hacemos el llamado por axios utilizando await async
     const response = await axios(url)
       this.setState({
-        result: response.data.DISPLAY[cryptocoin][coin]
-      })
+        result: response.data.DISPLAY[cryptocoin][coin],
+        loading: true
+      }, () => setTimeout(() =>{
+        this.setState({
+          loading: false
+        })
+      }, 3000)) // se hace el llamado a un callback
+      //3 seguondos cambia la carga
+      
+      
   }
 
   render() {
+    const result = (this.state.loading) ? <Spinner /> : <Result result={this.state.result}/>
+    
     return (
       <div className="container">
         <div className="row">
@@ -43,9 +55,7 @@ class App extends Component {
            //se recomienda utilizar el nombre del props igual que el metodo para evitar confusion 
             quoteCryptocoin={this.quoteCryptocoin}
            />
-           <Result 
-            result={this.state.result}
-           />
+        {result}
           </div>
 
         </div>
