@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import imagen from './img/cryptomonedas.png';
 import './css/App.css';
 import FormCrypto from './components/FormCrypto';
+import Result from './components/Result';
 import axios from 'axios';
 
 class App extends Component {
@@ -41,6 +42,9 @@ class App extends Component {
            <FormCrypto 
            //se recomienda utilizar el nombre del props igual que el metodo para evitar confusion 
             quoteCryptocoin={this.quoteCryptocoin}
+           />
+           <Result 
+            result={this.state.result}
            />
           </div>
 
