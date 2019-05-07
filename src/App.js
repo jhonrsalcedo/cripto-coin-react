@@ -15,13 +15,18 @@ class App extends Component {
     }
   }
   //se crea un metodo que cotize los dados select desde formCrypto
-  quoteCryptocoin = (quoteForm) =>{
+  quoteCryptocoin = async (quoteForm) =>{
     //obtener los valores 
     const {coin, cryptocoin} = quoteForm;
 
     //realizar consulta con axios a la api
-    const url =`https://min-api.cryptocompare.com/data/price?fsym=${cryptocoin}&tsyms=${coin}`
-    console.log(url)
+    const url =`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptocoin}&tsyms=${coin}`;
+    //console.log(url)
+    //hacemos el llamado por axios utilizando await async
+    const response = await axios(url)
+      this.setState({
+        result: response.data.DISPLAY[cryptocoin][coin]
+      })
   }
 
   render() {
