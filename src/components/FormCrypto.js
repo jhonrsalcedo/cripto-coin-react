@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Cryptocoin from './Cryptocoin';
 import Error from './Error';
+import PropTypes from 'prop-types';
 class FormCrypto extends Component {
     constructor(props) {
         super(props);
@@ -107,6 +108,10 @@ class FormCrypto extends Component {
             </form>
         );
     }
+}
+
+FormCrypto.propTypes={
+    quoteCryptocoin: PropTypes.func.isRequired
 }
 
 export default FormCrypto;

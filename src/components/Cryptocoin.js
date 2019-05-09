@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 //Stateless Function Component
 const Cryptocoin = ({cryptoCoins}) =>{
@@ -10,5 +11,9 @@ const Cryptocoin = ({cryptoCoins}) =>{
     );
 }
 
+Cryptocoin.propTypes ={
+    cryptoCoins: PropTypes.object.isRequired
+}
 
 export default Cryptocoin;
+
